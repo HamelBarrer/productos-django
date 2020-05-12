@@ -29,7 +29,9 @@ def add(request):
         cart=cart, product=product, quantity=quantity)
 
     return render(request, template_name, {
-        'product': product
+        'quantity': quantity,
+        'cart_product': cart_product,
+        'product': product,
     })
 
 
