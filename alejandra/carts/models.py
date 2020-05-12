@@ -27,7 +27,9 @@ class Cart(models.Model):
         self.update_total()
 
     def update_subtotal(self):
-        self.subtotal = sum([product.price for product in self.products.all()])
+        self.subtotal = sum([
+            cp.quantity * cp.product.price for cp in self.products_related()
+        ])
         self.save()
 
     def update_total(self):
@@ -78,5 +80,5 @@ def post_save_update_totals(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(set_cart_id, sender=Cart)
-#post_save.connect(post_save_update_totals, sender=CardProducts)
+post_save.connect(post_save_update_totals, sender=CardProducts)
 m2m_changed.connect(update_totals, sender=Cart.products.through)
