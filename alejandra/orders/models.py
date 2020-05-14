@@ -1,7 +1,5 @@
 import uuid
 
-from enum import Enum
-
 from django.db import models
 from django.db.models.signals import pre_save
 
@@ -11,15 +9,7 @@ from carts.models import Cart
 
 from shipping_addresses.models import ShippingAddress
 
-
-class OrderStatus(Enum):
-    CREATED = 'CREATED'
-    PAYED = 'PAYED'
-    COMPLETED = 'COMPLETED'
-    CANCEL = 'CANCEL'
-
-
-choices = [(tag, tag.value) for tag in OrderStatus]
+from .common import OrderStatus, choices
 
 
 class Order(models.Model):
